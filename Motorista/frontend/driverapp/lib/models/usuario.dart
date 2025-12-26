@@ -5,7 +5,7 @@ class Usuario {
   final String kmSaida;
   final String kmChegada;
   final String destino;
-  final String data;
+  final String data; // yyyy-MM-dd
   final String horaSaida;
   final String horaChegada;
   final String obs;

@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
 import '../models/usuario.dart';
 
 class UsuarioService {
   final String baseUrl = "http://localhost:8080/usuario";
+
 
   /// CREATE
   Future<Usuario> salvarUsuario(Usuario usuario) async {
@@ -13,7 +15,7 @@ class UsuarioService {
       body: jsonEncode(usuario.toJson()),
     );
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 201 || response.statusCode == 200) {
       return Usuario.fromJson(jsonDecode(response.body));
     } else {
       throw Exception("Erro ao salvar usuário: ${response.statusCode}");
@@ -66,4 +68,34 @@ class UsuarioService {
       throw Exception("Erro ao deletar usuário");
     }
   }
+
+ Future<List<Usuario>> buscarPorData(
+  String dataInicialIso,
+  String dataFinalIso,
+) async {
+  final uri = Uri.http(
+    "localhost:8080",
+    "/usuario/buscar-por-data",
+    {
+      "dataInicial": dataInicialIso, // Já está no formato yyyy-MM-dd
+      "dataFinal": dataFinalIso,     // Já está no formato yyyy-MM-dd
+    },
+  );
+
+
+  final response = await http.get(uri);
+
+  print("📥 Resposta: ${response.statusCode} - ${response.body}");
+
+  if (response.statusCode == 200) {
+    List<dynamic> body = jsonDecode(response.body);
+    return body.map((e) => Usuario.fromJson(e)).toList();
+  } else if (response.statusCode == 404) {
+    // Se não encontrar registros, retorna lista vazia
+    return [];
+  } else {
+    throw Exception("Erro ${response.statusCode}: ${response.body}");
+  }
+}
+
 }

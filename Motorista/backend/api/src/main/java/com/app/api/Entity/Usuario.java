@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.time.LocalDate;
+
 @Entity
 public class Usuario {
 
@@ -17,7 +19,7 @@ public class Usuario {
     private String kmSaida;
     private String kmChegada;
     private String destino;
-    private String data;
+    private LocalDate data;
     private String horaSaida;
     private String horaChegada;
     private String obs;
@@ -70,11 +72,11 @@ public class Usuario {
         this.destino = destino;
     }
 
-    public String getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 

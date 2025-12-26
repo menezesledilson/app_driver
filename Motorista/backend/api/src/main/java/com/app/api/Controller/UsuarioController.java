@@ -4,12 +4,15 @@ import com.app.api.Entity.Usuario;
 import com.app.api.Repository.UsuarioRepository;
 import com.app.api.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5000")
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -69,4 +72,17 @@ public class UsuarioController {
         usuarioRepository.delete(usuario);
         return ResponseEntity.noContent().build();
     }
+
+   // Buscar por data
+   @GetMapping("/buscar-por-data")
+   public ResponseEntity<List<Usuario>> buscarPorIntervalo(
+           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicial,
+           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal
+   ) {
+       return ResponseEntity.ok(
+               usuarioRepository.findByDataBetween(dataInicial, dataFinal)
+       );
+   }
+
 }
+
