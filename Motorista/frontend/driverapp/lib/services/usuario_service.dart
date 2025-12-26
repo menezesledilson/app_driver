@@ -85,7 +85,7 @@ class UsuarioService {
 
   final response = await http.get(uri);
 
-  print("📥 Resposta: ${response.statusCode} - ${response.body}");
+  //print("📥 Resposta: ${response.statusCode} - ${response.body}");
 
   if (response.statusCode == 200) {
     List<dynamic> body = jsonDecode(response.body);

@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Motorista',
-      //home: const LoginPage(),
-      home: const CadastroUsuarioPage(),
+      home: const LoginPage(),
+      //home: const CadastroUsuarioPage(),
     );
   }
 }

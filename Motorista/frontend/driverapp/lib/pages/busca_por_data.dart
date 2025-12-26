@@ -29,9 +29,9 @@ class _BuscarUsuarioPageState extends State<BuscarUsuarioPage> {
 
   void buscar() async {
     if (dataInicial == null || dataFinal == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Selecione as duas datas.")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Selecione as duas datas.")));
       return;
     }
 
@@ -52,7 +52,7 @@ class _BuscarUsuarioPageState extends State<BuscarUsuarioPage> {
     try {
       final usuarios = await service.buscarPorData(
         backendFormat.format(dataInicial!), // ✅ ISO
-        backendFormat.format(dataFinal!),   // ✅ ISO
+        backendFormat.format(dataFinal!), // ✅ ISO
       );
 
       setState(() => resultados = usuarios);
@@ -63,9 +63,9 @@ class _BuscarUsuarioPageState extends State<BuscarUsuarioPage> {
         );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Erro: $e")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Erro: $e")));
     }
 
     setState(() => loading = false);
@@ -121,7 +121,7 @@ class _BuscarUsuarioPageState extends State<BuscarUsuarioPage> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 900),
@@ -167,27 +167,52 @@ class _BuscarUsuarioPageState extends State<BuscarUsuarioPage> {
                     /// RESULTADO
                     Expanded(
                       child: !buscou
-                          ? const Center(
-                              child: Text("Selecione um período"),
-                            )
+                          ? const Center(child: Text("Selecione um período"))
                           : resultados.isEmpty
-                              ? const Center(
-                                  child: Text("Nenhum registro encontrado"),
-                                )
-                              : ListView.builder(
-                                  itemCount: resultados.length,
-                                  itemBuilder: (context, index) {
-                                    final u = resultados[index];
-                                    return Card(
-                                      child: ListTile(
-                                        title: Text(u.motorista),
-                                        subtitle: Text(
-                                          "${u.placa} • ${u.destino} • ${u.data}",
+                          ? const Center(
+                              child: Text("Nenhum registro encontrado"),
+                            )
+                          : ListView.builder(
+                              itemCount: resultados.length,
+                              itemBuilder: (context, index) {
+                                final u = resultados[index];
+                                return Card(
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 8,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          u.motorista,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                ),
+                                        const SizedBox(height: 6),
+                                        Wrap(
+                                          spacing: 12,
+                                          runSpacing: 4,
+                                          children: [
+                                            Text("Data: ${u.data}"),
+                                            Text("Placa: ${u.placa}"),
+                                            Text("Km Saída: ${u.kmSaida}"),
+                                            Text("Km Chegada: ${u.kmChegada}"),
+                                            Text("Destino: ${u.destino}"),
+                                            Text("Saída: ${u.horaSaida}"),
+                                            Text("Chegada: ${u.horaChegada}"),
+                                            Text("Obs: ${u.obs}"),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                     ),
                   ],
                 ),
@@ -213,9 +238,7 @@ class _BuscarUsuarioPageState extends State<BuscarUsuarioPage> {
         minimumSize: const Size(240, 50),
       ),
       child: Text(
-        data == null
-            ? label
-            : "$label: ${displayFormat.format(data)}",
+        data == null ? label : "$label: ${displayFormat.format(data)}",
         style: const TextStyle(fontSize: 16),
       ),
     );
