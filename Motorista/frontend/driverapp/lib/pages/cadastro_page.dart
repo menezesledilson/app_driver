@@ -61,7 +61,7 @@ class _CadastroUsuarioPageState extends State<CadastroUsuarioPage> {
         kmSaida: kmSaida.text,
         kmChegada: kmChegada.text,
         destino: destino.text,
-        data: converterParaIso(data.text), // ✅ AQUI
+        data: converterParaIso(data.text),
         horaSaida: horaSaida.text,
         horaChegada: horaChegada.text,
         obs: obs.text,

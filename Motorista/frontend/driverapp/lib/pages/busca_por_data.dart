@@ -197,7 +197,11 @@ class _BuscarUsuarioPageState extends State<BuscarUsuarioPage> {
                                           spacing: 12,
                                           runSpacing: 4,
                                           children: [
-                                            Text("Data: ${u.data}"),
+                                            Text(
+                                              "Data: ${DateFormat('dd/MM/yyyy')
+                                              .format(DateTime.parse(u.data),
+                                              )}",
+                                            ),
                                             Text("Placa: ${u.placa}"),
                                             Text("Km Saída: ${u.kmSaida}"),
                                             Text("Km Chegada: ${u.kmChegada}"),
