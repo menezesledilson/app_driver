@@ -1,9 +1,3 @@
-# app_driver
-Perfeito 👍
-Segue um **README bem simples**, curto e já **adaptado para portfólio**, focando no que importa para recrutador/avaliador.
-
----
-
 # 🚗 Sistema de Controle de Motoristas
 
 Aplicação desenvolvida para **registro e consulta de motoristas e deslocamentos**, com **backend em Java (Spring Boot)**, **frontend em Flutter** e **banco de dados MariaDB**.
